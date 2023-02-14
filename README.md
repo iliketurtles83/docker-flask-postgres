@@ -1,2 +1,2 @@
 # psychic-robot
-practice web app
+web app with crud functionality and 

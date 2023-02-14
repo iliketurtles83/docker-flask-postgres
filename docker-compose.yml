@@ -1,0 +1,24 @@
+services:
+  db:
+    container_name: postgres
+    image: postgres:latest
+    restart: always
+    env_file:
+      - .env_pg
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  web:
+    container_name: company_app
+    build: app
+    stop_signal: SIGINT
+    restart: always
+    env_file:
+      - .env_flask
+    ports:
+      - 8000:8000
+
+volumes:
+  db_data:
