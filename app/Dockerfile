@@ -10,3 +10,5 @@ RUN pip install -r requirements.txt
 COPY . /app/
 
 CMD ["python", "app.py"]
+# ENTRYPOINT ["gunicorn", "-b", ":8080"]
+# CMD [ "app.app:create_app()" ]

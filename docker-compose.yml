@@ -1,3 +1,5 @@
+version: '3'
+
 services:
   db:
     container_name: postgres
@@ -11,14 +13,22 @@ services:
       - db_data:/var/lib/postgresql/data
 
   web:
-    container_name: company_app
-    build: app
+    container_name: flask
+    build: ./app
     stop_signal: SIGINT
     restart: always
     env_file:
       - .env_flask
     ports:
       - 8000:8000
+    # networks:
+    #   - backend
+    depends_on:
+      - db
 
 volumes:
   db_data:
+
+# networks:
+#   backend:
+#     driver: bridge
