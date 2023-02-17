@@ -1,6 +1,6 @@
 
 from flask import jsonify, request
-from models import Company, ShareHolder
+from models import db, Company, ShareHolder
 
 
 def init_routes(app):

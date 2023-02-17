@@ -1,10 +1,9 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
+from models import db
 from config import config
-# from routes import init_routes
-from routes import main_bp
-
-db = SQLAlchemy()
+from routes import init_routes
+# from routes import main_bp
 
 
 print('hahahaha')
@@ -14,10 +13,10 @@ def create_app(config_name):
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
-    # db.init_app(app)
+    db.init_app(app)
 
-    # init_routes(app)
+    init_routes(app)
 
-    app.register_blueprint(main_bp)
+    # app.register_blueprint(main_bp)
 
     return app
