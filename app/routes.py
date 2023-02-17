@@ -2,6 +2,9 @@
 from flask import jsonify, request
 from models import db, Company, ShareHolder
 
+# from flask import Blueprint
+# main_bp = Blueprint('main', __name__)
+
 
 def init_routes(app):
 

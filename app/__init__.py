@@ -1,17 +1,17 @@
 from flask import Flask
 # from flask_sqlalchemy import SQLAlchemy
 from models import db
-from config import config
+from config import Config
 from routes import init_routes
 # from routes import main_bp
 
 
 print('hahahaha')
-def create_app(config_name):
+def create_app(config_name=Config):
     app = Flask(__name__)
 
-    app.config.from_object(config[config_name])
-    config[config_name].init_app(app)
+    app.config.from_object(config_name)
+    # config[config_name].init_app(app)
 
     db.init_app(app)
 
