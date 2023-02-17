@@ -1,6 +1,8 @@
-from . import db
+from flask_sqlalchemy import SQLAlchemy
 
-class Company(db.model):
+db = SQLAlchemy()
+
+class Company(db.Model):
     __tablename__ = 'companies'
     reg_code = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -16,7 +18,7 @@ class Company(db.model):
             'start_capital': self.start_capital
         }
 
-class ShareHolder(db.model):
+class ShareHolder(db.Model):
     __tablename__ = 'shareholders'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)

@@ -11,7 +11,6 @@ services:
       - 5432:5432
     volumes:
       - db_data:/var/lib/postgresql/data
-
   web:
     container_name: flask
     build: ./app
@@ -25,6 +24,14 @@ services:
     #   - backend
     depends_on:
       - db
+  # nginx:
+  #   container_name: nginx
+  #   build: ./nginx
+  #   restart: always
+  #   ports:
+  #     - 80:80
+  #   depends_on:
+  #     - web
 
 volumes:
   db_data:

@@ -1,10 +1,14 @@
+# from . import create_app
 from flask import Flask
+from models import db, Company, ShareHolder
+import os
+
 app = Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('DATABASE_URL')
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password123@localhost:5432'
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-# db = SQLAlchemy(app)
 
 @app.route('/')
 def hello():
