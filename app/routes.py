@@ -1,8 +1,14 @@
-from models import db, Company
+
 from flask import jsonify, request
+from models import Company, ShareHolder
+
 
 def init_routes(app):
-        
+
+    @app.route('/')
+    def hello():
+	    return "Hello World!"
+    
     @app.route('/company/list', methods=['GET'])
     def get_companies():
         companies = Company.query.all()
@@ -13,7 +19,7 @@ def init_routes(app):
         company = Company.query.get(id)
         if company is None:
             return jsonify({'message': 'Company not found'}), 404
-        return jsonify(company.to_json())
+        return jsonify(company.to_json()), 200
 
     @app.route('/company', methods=['POST'])
     def create_company():

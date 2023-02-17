@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Company</title>
+</head>
+<body>
+    <h1>Create a new cser</h1>
+    <form action="{{ url_for('main.create_company') }}" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" name="name" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" required><br>
+
+        <label for="start_capital">Starting capital</label>
+        <input type="number" name="start_capital" required><br>
+
+        <input type="submit" value="Create">
+    </form>
+</body>
+</html>

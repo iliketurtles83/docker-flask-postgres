@@ -11,7 +11,6 @@ class Company(db.Model):
 
     def to_json(self):
         return {
-            'id': self.id,
             'name': self.name,
             'reg_code': self.reg_code,
             'start_date': self.start_date,
