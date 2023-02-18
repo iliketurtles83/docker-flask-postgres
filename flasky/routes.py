@@ -1,5 +1,5 @@
 
-from flask import jsonify, request
+from flask import jsonify, request, render_template
 from models import db, Company, ShareHolder
 
 # from flask import Blueprint
@@ -7,22 +7,21 @@ from models import db, Company, ShareHolder
 
 
 def init_routes(app):
-
     @app.route('/')
-    def hello():
-	    return "Hello World!"
+    def landing():
+	    return render_template('index.html')
     
-    @app.route('/company/list', methods=['GET'])
-    def get_companies():
-        companies = Company.query.all()
-        return jsonify([company.to_json() for company in companies])
-
     @app.route('/company/<int:id>', methods=['GET'])
     def get_company(id):
         company = Company.query.get(id)
         if company is None:
             return jsonify({'message': 'Company not found'}), 404
         return jsonify(company.to_json()), 200
+    
+    @app.route('/company/list', methods=['GET'])
+    def get_companies():
+        companies = Company.query.all()
+        return jsonify([company.to_json() for company in companies])
 
     @app.route('/company', methods=['POST'])
     def create_company():
