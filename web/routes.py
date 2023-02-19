@@ -8,9 +8,10 @@ from models import db, Company, ShareHolder
 
 def init_routes(app):
     @app.route('/')
-    def landing():
+    def hello():
+        # return 'Hello World'
 	    return render_template('index.html')
-    
+   
     @app.route('/company/<int:id>', methods=['GET'])
     def get_company(id):
         company = Company.query.get(id)

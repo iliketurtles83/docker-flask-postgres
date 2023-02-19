@@ -13,7 +13,7 @@ services:
       - db_data:/var/lib/postgresql/data
   web:
     container_name: flask
-    build: ./flasky
+    build: ./web
     stop_signal: SIGINT
     restart: always
     env_file:
