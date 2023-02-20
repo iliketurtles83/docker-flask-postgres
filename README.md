@@ -1,4 +1,12 @@
-## Simple web app for practice
+## Boilerplate Flask web app
+
+For practice purposes. But once finished, it can be easily copied and adapted to suit whatever needs.
+
+### Tech Stack
+- Web: Flask
+- ORM: SQLAlchemy
+- Database: PostgreSQL
+- Containerization: Docker
 
 ### Roadmap
 - [x] Basic Flask container
@@ -8,8 +16,7 @@
 - [x] Postgres integration into Flask
 - [x] use __init__.py for Flask
 - [x] Flask separate config.py
-- [ ] Frontend for doing CRUD on db
-- [ ] Nginx container
-- [ ] Gunicorn
-- [ ] WSGI
-- [ ] What else?
+- [ ] Frontend for doing CRUD
+- [ ] Nginx server container
+- [ ] WSGI-Gunicorn
+- [ ] validation through Pydantic
