@@ -5,9 +5,9 @@
 - [x] Basic dockerization
 - [x] models for SQLAlchemy
 - [x] Postgres container
-- [ ] Postgres integration into Flask
-- [ ] use __init__.py for Flask
-- [ ] Flask separate config.py
+- [x] Postgres integration into Flask
+- [x] use __init__.py for Flask
+- [x] Flask separate config.py
 - [ ] Frontend for doing CRUD on db
 - [ ] Nginx container
 - [ ] Gunicorn
