@@ -9,8 +9,7 @@ from models import db, Company, ShareHolder
 def init_routes(app):
     @app.route('/')
     def hello():
-        # return 'Hello World'
-	    return render_template('index.html')
+        return render_template('index.html'), 200
    
     @app.route('/company/<int:id>', methods=['GET'])
     def get_company(id):
