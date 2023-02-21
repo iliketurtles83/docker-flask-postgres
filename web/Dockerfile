@@ -12,7 +12,6 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-# CMD ["python3", "-m", "flask", "run"]
-CMD ["python", "app.py"]
-# ENTRYPOINT ["gunicorn", "-b", ":8080"]
-# CMD [ "app:create_app()" ]
+RUN chmod +x entrypoint.sh
+# CMD ["python", "app.py"]
+CMD ["./entrypoint.sh"]

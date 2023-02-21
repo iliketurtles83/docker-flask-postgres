@@ -2,7 +2,7 @@ from flask import Flask
 from models import db
 from config import Config
 from routes import main_bp
-from flask_migrate import Migrate
+# from flask_migrate import Migrate
 
 def create_app(config_name=Config):
     app = Flask(__name__)
@@ -11,7 +11,7 @@ def create_app(config_name=Config):
     # config[config_name].init_app(app)
 
     db.init_app(app)
-    migrate = Migrate(app, db)
+    # migrate = Migrate(app, db)
     # db.create_all(app)
 
     app.register_blueprint(main_bp)
