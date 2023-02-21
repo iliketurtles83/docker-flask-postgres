@@ -7,6 +7,7 @@ For practice purposes. But once finished, it can be easily copied and adapted to
 - ORM: SQLAlchemy
 - Database: PostgreSQL
 - Containerization: Docker
+- WSGI Server: Gunicorn
 
 ### Roadmap
 - [x] Basic Flask container
@@ -16,7 +17,9 @@ For practice purposes. But once finished, it can be easily copied and adapted to
 - [x] Postgres integration into Flask
 - [x] use __init__.py for Flask
 - [x] Flask separate config.py
+- [x] Routes via blueprints
 - [ ] Frontend for doing CRUD
 - [ ] Nginx server container
-- [ ] WSGI-Gunicorn
+- [x] WSGI-Gunicorn
 - [ ] validation through Pydantic
+- [ ] User auth and respective routes
