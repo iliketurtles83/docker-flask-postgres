@@ -1,8 +1,7 @@
 from flask import Flask
 from models import db
 from config import Config
-from routes import init_routes
-# from routes import main_bp
+from routes import main_bp
 from flask_migrate import Migrate
 
 def create_app(config_name=Config):
@@ -15,8 +14,6 @@ def create_app(config_name=Config):
     migrate = Migrate(app, db)
     # db.create_all(app)
 
-    init_routes(app)
-
-    # app.register_blueprint(main_bp)
+    app.register_blueprint(main_bp)
 
     return app
