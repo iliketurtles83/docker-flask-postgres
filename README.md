@@ -1,6 +1,6 @@
 ## Boilerplate Flask web app
 
-For practice purposes. But once finished, it can be easily copied and adapted to suit whatever needs.
+For practice purposes. But once finished, it can be easily copied and adapted to suit all kinds of needs. It works locally but since i'm still learning, a lot of things are not configured according to best practices.
 
 ### Tech Stack
 - Web: Flask
@@ -8,8 +8,9 @@ For practice purposes. But once finished, it can be easily copied and adapted to
 - Database: PostgreSQL
 - Containerization: Docker
 - WSGI Server: Gunicorn
+- Reverse Proxy Server: NGINX
 
-### Roadmap
+### Todo / Roadmap
 - [x] Basic Flask container
 - [x] Basic dockerization
 - [x] models for SQLAlchemy
@@ -19,7 +20,15 @@ For practice purposes. But once finished, it can be easily copied and adapted to
 - [x] Flask separate config.py
 - [x] Routes via blueprints
 - [ ] Frontend for doing CRUD
-- [ ] Nginx server container
+- [x] Nginx server container
 - [x] WSGI-Gunicorn
+- [ ] Reorganize Flask app folder structure
 - [ ] validation through Pydantic
 - [ ] User auth and respective routes
+
+### Instructions
+1. Rename .env_flask.sample and .env_pg.sample to .env_flask and .env_pg
+2. Replace your Postgres username, password and db_name in both files.
+3. Run 'chmod +x entrypoint.sh' (not sure if Github keeps permissions)
+4. run 'docker compose up'
+6. run 'docker compose build'
