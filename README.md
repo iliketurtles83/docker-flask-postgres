@@ -25,10 +25,14 @@ For practice purposes. But once finished, it can be easily copied and adapted to
 - [ ] Reorganize Flask app folder structure
 - [ ] validation through Pydantic
 - [ ] User auth and respective routes
+- [ ] Redis?
+- [ ] Celery?
+- [ ] RabbitMQ?
 
 ### Instructions
 1. Rename .env_flask.sample and .env_pg.sample to .env_flask and .env_pg
 2. Replace your Postgres username, password and db_name in both files.
-3. Run 'chmod +x entrypoint.sh' (not sure if Github keeps permissions)
-4. run 'docker compose up'
+3. smtn smtn run manage.py to create tables
+4. Run 'chmod +x entrypoint.sh' (not sure if Github keeps permissions)
+5. run 'docker compose up'
 6. run 'docker compose build'

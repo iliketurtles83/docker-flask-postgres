@@ -1,6 +1,6 @@
 
 from flask import Blueprint, jsonify, request, render_template
-from models import db, Company, ShareHolder
+from models import db, Company, NaturalShareHolder, LegalShareHolder
 
 main_bp = Blueprint('main', __name__)
 
