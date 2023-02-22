@@ -8,9 +8,10 @@ services:
     env_file:
       - .env_pg
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+
   web:
     container_name: flask
     build: ./web
@@ -19,19 +20,22 @@ services:
     env_file:
       - .env_flask
     ports:
-      - 8000:8000
+      - "8000:8000"
+    expose:
+      - 8000
     # networks:
     #   - backend
     depends_on:
       - db
-  # nginx:
-  #   container_name: nginx
-  #   build: ./nginx
-  #   restart: always
-  #   ports:
-  #     - 80:80
-  #   depends_on:
-  #     - web
+
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - web
 
 volumes:
   db_data:
