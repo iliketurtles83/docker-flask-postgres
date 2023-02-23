@@ -1,14 +1,33 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Company Register</title>
-    </head>
-    <body>
-        <h1>Companies</h1>
-        <ul>
-            {% for company in companies %}
-                <li>{{ company.name }}</li>
-            {% endfor %}
-        </ul>
-    </body>
-</html>
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Company Registry{% endblock %}
+
+{% block styles %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Companies</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Reg Code</th>
+            <th>Capital</th>
+            <th>Start Date</th>
+        </tr>
+        {% for company in companies %}
+            <tr>
+                <td><a href="{{ url_for('main.get_company', id=company.id) }}">{{ company.name }}</a></td>
+                <td>{{ company.reg_code }}</td>
+                <td>{{ company.start_capital }}</td>
+                <td>{{ company.start_date }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>        
+{% endblock %}
