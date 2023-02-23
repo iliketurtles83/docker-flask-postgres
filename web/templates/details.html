@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Company Details</title>
+    </head>
+    <body>
+        <h1>{{ company.name }}</h1>
+        <p>Reg Code: {{ company.reg_code }}</p>
+        <p>Capital: {{ company.start_capital }}</p>
+        <p>Start Date: {{ company.start_date }}</p>
+        <h2>Natural Shareholders</h2>
+        <ul>
+            {% for shareholder in company.natural_shareholders %}
+                <li>{{ shareholder.name }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Legal Shareholders</h2>
+        <ul>
+            {% for shareholder in company.legal_shareholders %}
+                <li>{{ shareholder.name }}</li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>
