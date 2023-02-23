@@ -16,6 +16,7 @@ class Company(db.Model):
 
     def to_json(self):
         return {
+            'id': self.id,
             'name': self.name,
             'reg_code': self.reg_code,
             'start_date': str(self.start_date),
@@ -54,3 +55,13 @@ class LegalShareHolder(db.Model):
 
     company_id = db.Column(db.Integer, db.ForeignKey('companies.reg_code'))
     company = db.relationship("Company", back_populates="legal_shareholders")
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'reg_code': self.reg_code,
+            'company_id': self.company_id,
+            'founder': self.founder,
+            'shares': self.shares
+        }
