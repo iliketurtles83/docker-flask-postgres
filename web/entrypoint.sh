@@ -1,2 +1,3 @@
 #!/bin/sh
-gunicorn -w 2 -b :8000 app:app
+cd /
+gunicorn -w 2 -b :8000 web.app:app
