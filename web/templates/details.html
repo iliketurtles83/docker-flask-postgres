@@ -1,27 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        {% block head %}
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        {% block styles %}
-            {{ bootstrap.load_css() }}
-        {% endblock %} 
+{% extends "base.html" %}
 
-        <title>{{ company.name }} Details</title>  
-        {% endblock %}
-    </head>
-
-    {% block navbar %}
-        {% include 'navbar.html' %}
-    {% endblock %}
-
+{% block title %}{{ company.name }} Details - Company Registry{% endblock %}
     <body>
         {% block content %}
         <div class="container">        
-        <h1>{{ company.name }}</h1>
+        <h1>Company: {{ company.name }}</h1>
         <p>Reg Code: {{ company.reg_code }}</p>
-        <p>Capital: {{ company.start_capital }}</p>
+        <p>Start Capital: {{ company.start_capital }}</p>
         <p>Start Date: {{ company.start_date }}</p>
         <h2>Natural Shareholders</h2>
         <ul>

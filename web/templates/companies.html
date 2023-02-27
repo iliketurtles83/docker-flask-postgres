@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Companies - Company Registry{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %} 
+    <body>
+        {% block content %}
+        <div class="container">
+            <h1>Companies</h1>
+            <table id="companylist">
+                <caption>List of registered companies</caption>
+                <tr>
+                    <th>Company Name</th>
+                    <th>Registration Code</th>
+                    <th>Start Capital</th>
+                    <th>Start Date</th>
+                </tr>
+                {% for company in companies %}
+                    <tr>
+                        <td><a href="{{ url_for('main.get_company', id=company.id) }}">{{ company.name }}</a></td>
+                        <td>{{ company.reg_code }}</td>
+                        <td>{{ company.start_capital }}</td>
+                        <td>{{ company.start_date }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>        
+        {% endblock %}
+    </body>
+</html>

@@ -1,43 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        {% block head %}
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        {% block styles %}
-            {{ bootstrap.load_css() }}
-        {% endblock %} 
+{% extends "base.html" %}
 
-        <title>Company Registry</title>  
-        {% endblock %}
-    </head>
-
-    {% block navbar %}
-        {% include 'navbar.html' %}
-    {% endblock %}
-
+{% block title %}Home - Company Registry{% endblock %}
     <body>
         {% block content %}
-        <div class="container">
-            <h1>Companies</h1>
-            <table>
-                <caption>List of registered companies</caption>
-                <tr>
-                    <th>Name</th>
-                    <th>Reg Code</th>
-                    <th>Capital</th>
-                    <th>Start Date</th>
-                </tr>
-                {% for company in companies %}
-                    <tr>
-                        <td><a href="{{ url_for('main.get_company', id=company.id) }}">{{ company.name }}</a></td>
-                        <td>{{ company.reg_code }}</td>
-                        <td>{{ company.start_capital }}</td>
-                        <td>{{ company.start_date }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        </div>        
+        <div class="container">        
+            <p>Hello and welcome to the Company Registry page.</p>
+            <p>Click on Companies to find info about registered companies.</p>
+            <p>Click on Add New to register a new company.</p>
+        </div>           
         {% endblock %}
     </body>
 </html>
