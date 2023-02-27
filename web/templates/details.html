@@ -1,9 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>Company Details</title>
+        {% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% block styles %}
+            {{ bootstrap.load_css() }}
+        {% endblock %} 
+
+        <title>{{ company.name }} Details</title>  
+        {% endblock %}
     </head>
+
+    {% block navbar %}
+        {% include 'navbar.html' %}
+    {% endblock %}
+
     <body>
+        {% block content %}
+        <div class="container">        
         <h1>{{ company.name }}</h1>
         <p>Reg Code: {{ company.reg_code }}</p>
         <p>Capital: {{ company.start_capital }}</p>
@@ -19,6 +34,8 @@
             {% for shareholder in company.legal_shareholders %}
                 <li>{{ shareholder.name }}</li>
             {% endfor %}
-        </ul>
+        </ul>  
+        </div>           
+        {% endblock %}
     </body>
 </html>
