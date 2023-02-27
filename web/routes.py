@@ -1,6 +1,7 @@
 
 from flask import Blueprint, jsonify, request, render_template
 
+from web.forms import CompanyForm
 from web.models import db, Company, NaturalShareHolder, LegalShareHolder
 
 main_bp = Blueprint('main', __name__)
@@ -23,24 +24,40 @@ def get_company(id):
         company.natural_shareholders = natural_shareholders
     return render_template('details.html', company=company), 200
 
-@main_bp.route('/company/list', methods=['GET'])
-def get_companies():
-    companies = Company.query.all()
-    return jsonify([company.to_json() for company in companies])
+# @main_bp.route('/company/list', methods=['GET'])
+# def get_companies():
+#     companies = Company.query.all()
+#     return jsonify([company.to_json() for company in companies])
 
-@main_bp.route('/company', methods=['POST'])
+@main_bp.route('/new_company', methods=['GET', 'POST'])
 def create_company():
-    if not request.json:
-        return jsonify({'message': 'Bad request'}), 400
-    
-    company = Company(
-        name=request.json['name'],
-        reg_code=request.json['reg_code'],
-        start_capital=request.json['start_capital']
-    )
-    db.session.add(company)
-    db.session.commit()
-    return jsonify(company.to_json()), 201
+    if request.method == 'GET':
+        return render_template("new_company.html", form=CompanyForm()), 200
+    if request.method == 'POST':
+            form = CompanyForm()
+            if form.validate_on_submit():
+                company = Company(
+                    name=request.form['name'],
+                    reg_code=request.form['reg_code'],
+                    start_date=request.form['start_date'],
+                    start_capital=request.form['start_capital']
+                )
+                db.session.add(company)
+
+                for shareholder_form in form.legal_shareholders:
+                    shareholder = LegalShareHolder(
+                        name=shareholder_form.name.data,
+                        company_id=company.reg_code
+                    )
+                    db.session.add(shareholder)
+                for shareholder_form in form.natural_shareholders:
+                    shareholder = NaturalShareHolder(
+                        name=shareholder_form.name.data,
+                        company_id=company.reg_code
+                    )
+                    db.session.add(shareholder)
+                db.session.commit()
+                return render_template("new_company.html"), 201
 
 @main_bp.route('/company/<int:id>', methods=['PUT'])
 def update_company(id):

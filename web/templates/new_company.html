@@ -1,21 +1,43 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>New Company</title>
-</head>
-<body>
-    <h1>Create a new cser</h1>
-    <form action="{{ url_for('main.create_company') }}" method="POST">
-        <label for="name">Name:</label>
-        <input type="text" name="name" required><br>
+<html lang="en">
+    <head>
+        {% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% block styles %}
+            
+            {{ bootstrap.load_css() }}
+        {% endblock %} 
 
-        <label for="email">Email:</label>
-        <input type="email" name="email" required><br>
+        <title>Create New Company - Company Registry</title>  
+        {% endblock %}
+    </head>
 
-        <label for="start_capital">Starting capital</label>
-        <input type="number" name="start_capital" required><br>
+    {% block navbar %}
+        {% include 'navbar.html' %}
+    {% endblock %}
 
-        <input type="submit" value="Create">
-    </form>
-</body>
+    <body>
+        {% block content %}
+        <div class="container">
+        <h2>Please fill out the fields</h2>
+        <form action="{{ url_for('main.create_company') }}" method="POST">
+            {{ form.csrf_token }}
+            {{ form.name.label }} {{ form.name }}
+            {{ form.reg_code.label }} {{ form.reg_code }}
+            {{ form.start_capital.label }} {{ form.start_capital }}
+            {{ form.start_date.label }} {{ form.start_date }}
+            <h3>Legal Shareholders</h3>
+            {% for field in form.legal_shareholders %}
+                {{ field.label }} {{ field }}
+            {% endfor %}
+            <h3>Natural Shareholders</h3>
+            {% for field in form.natural_shareholders %}
+                {{ field.label }} {{ field }}
+            {% endfor %}
+            <button type="submit">Create Company</button>
+        </form>  
+        </div>   
+        {% endblock %}
+    </body>
 </html>
