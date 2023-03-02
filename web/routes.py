@@ -51,7 +51,7 @@ def create_company():
                         shares=shareholder_form.shares.data,
                         company_id=company.reg_code
                     )
-                    db.session.add(shareholder)
+                    company.legal_shareholders.append(shareholder)
                 for shareholder_form in form.natural_shareholders:
                     shareholder = NaturalShareHolder(
                         first_name=shareholder_form.first_name.data,
@@ -61,7 +61,7 @@ def create_company():
                         shares=shareholder_form.shares.data,
                         company_id=company.reg_code
                     )
-                    db.session.add(shareholder)
+                    company.natural_shareholders.append(shareholder)
 
                 db.session.commit()
                 return "Company created"
