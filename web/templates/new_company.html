@@ -20,12 +20,13 @@
                 <h3>Natural Shareholders</h3>
                 <div id="natural-shareholders" style="display: inline-block">
                     <div class="form-row">
-                        <input type="text" name="nat_first_name[]" placeholder="First Name">
-                        <input type="text" name="nat_last_name[]" placeholder="Last Name">
-                        <input type="text" name="nat_sin[]" placeholder="SIN">
+                        {{ form.sh}}
+                        <!-- <input type="text" name="nat_first_name[]" id="nat_first_name" placeholder="First Name"> -->
+                        <input type="text" name="nat_last_name[]" id="nat_last_name" placeholder="Last Name">
+                        <input type="text" name="nat_sin[]" id="nat_sin" placeholder="SIN">
                         <label>Founder:</label>
-                        <input type="checkbox" name="nat_founder[]">
-                        <input type="number" name="nat_shares[]" placeholder="Shares">
+                        <input type="checkbox" name="nat_founder[]" id="nat_founder">
+                        <input type="number" name="nat_shares[]" id="nat_shares" placeholder="Shares">
                     </div>
                 </div>
                 <div>

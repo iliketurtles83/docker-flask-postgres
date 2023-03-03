@@ -32,6 +32,7 @@ def get_companies():
 def create_company():
     form = CompanyForm()
     print(form.name.data)
+    print(request.form.getlist('nat_first_name[]'))
     if form.validate_on_submit():
         company = Company(
             name=form.name.data,
