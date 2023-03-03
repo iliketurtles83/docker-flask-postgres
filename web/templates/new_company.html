@@ -1,30 +1,92 @@
 {% extends "base.html" %}
 
-{% block title %}Home - Company Registry{% endblock %}
+{% block title %}New Company - Company Registry{% endblock %}
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 {% endblock %} 
     <body>
-        {% block content %}
-        <div class="container">
+    {% block content %}
+        <div id="container">
             <h2>Please fill out the fields</h2>
             <form action="{{ url_for('main.create_company') }}" method="POST">
+                <div class="company">
                 {{ form.csrf_token }}
-                {{ form.name.label }} {{ form.name }}
-                {{ form.reg_code.label }} {{ form.reg_code }}
-                {{ form.start_capital.label }} {{ form.start_capital }}
-                {{ form.start_date.label }} {{ form.start_date }}
-                <h3>Legal Shareholders</h3>
-                {% for field in form.legal_shareholders %}
-                    {{ field.label }} {{ field }}
-                {% endfor %}
+                {{ form.hidden_tag() }}
+                {{ form.name.label }} {{ form.name(class="form-control", placeholder="Company name") }}
+                {{ form.reg_code.label }} {{ form.reg_code(class="form-control", placeholder="Registration Code") }}
+                {{ form.start_capital.label }} {{ form.start_capital(class="form-inline") }}
+                {{ form.start_date.label }} {{ form.start_date(class="form-inline") }}
+                </div>
                 <h3>Natural Shareholders</h3>
-                {% for field in form.natural_shareholders %}
-                    {{ field.label }} {{ field }}
-                {% endfor %}
-                <button type="submit">Create Company</button>
+                <div id="natural-shareholders" style="display: inline-block">
+                    <div class="form-row">
+                        <input type="text" name="nat_first_name[]" placeholder="First Name">
+                        <input type="text" name="nat_last_name[]" placeholder="Last Name">
+                        <input type="text" name="nat_sin[]" placeholder="SIN">
+                        <label>Founder:</label>
+                        <input type="checkbox" name="nat_founder[]">
+                        <input type="number" name="nat_shares[]" placeholder="Shares">
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-success add-natural-shareholder" type="button">Add</button>
+                </div>
+                <h3>Legal Shareholders</h3>
+                <div id="legal-shareholders" style="display: inline-block">
+                    <div class="form-row">
+                        <input type="text" name="leg_name[]" placeholder="Name">
+                        <input type="text" name="leg_reg_code[]" placeholder="Registration Code">
+                        <label>Founder:</label>
+                        <input type="checkbox" name="leg_founder[]">
+                        <input type="number" name="leg_shares[]" placeholder="Shares">
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-success add-legal-shareholder" type="button">Add</button>
+                    <button type="submit" class="btn btn-primary">Create Company</button>
+                </div>
             </form>  
             </div>         
+
+        {% block scripts %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+            <script>
+            $(document).ready(function() {
+                $('.add-natural-shareholder').click(function() {
+                    var html = '<div class="form-row">' +
+                                '<input type="text" name="nat_first_name[]" placeholder="First Name"> ' +
+                                '<input type="text" name="nat_last_name[]" placeholder="Last Name"> ' +
+                                '<input type="text" name="nat_sin[]" placeholder="SIN"> ' +
+                                '<label>Founder:</label>' +
+                                '<input type="checkbox" name="nat_founder[]"> ' +
+                                '<input type="number" name="nat_shares[]" placeholder="Shares"> ' +
+                                '<button class="btn btn-sm btn-danger remove-shareholder" type="button">' +
+                                    'X' +
+                                '</button>' +
+                            '</div>';
+                    $('#natural-shareholders').append(html);
+                });
+
+                $('.add-legal-shareholder').click(function() {
+                    var html = '<div class="form-row">' +
+                                '<input type="text" name="leg_name[]" placeholder="Name"> ' +
+                                '<input type="text" name="leg_reg_code[]" placeholder="Registration Code"> ' +
+                                '<label>Founder:</label>' +
+                                '<input type="checkbox" name="leg_founder[]"> ' +
+                                '<input type="number" name="leg_shares[]" placeholder="Shares"> ' +
+                                '<button class="btn btn-sm btn-danger remove-shareholder" type="button">' +
+                                    'X' +
+                                '</button>' +
+                            '</div>';
+                    $('#legal-shareholders').append(html);
+                });
+
+                $(document).on('click', '.remove-shareholder', function() {
+                    $(this).closest('.form-row').remove();
+                });
+            });
+            </script>
         {% endblock %}
+    {% endblock %}
     </body>
 </html>

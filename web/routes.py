@@ -1,5 +1,5 @@
 
-from flask import Blueprint, jsonify, request, render_template
+from flask import Blueprint, jsonify, redirect, request, render_template, url_for
 
 from web.forms import CompanyForm
 from web.models import db, Company, NaturalShareHolder, LegalShareHolder
@@ -30,43 +30,52 @@ def get_companies():
 
 @main_bp.route('/new_company', methods=['GET', 'POST'])
 def create_company():
-    if request.method == 'GET':
-        return render_template("new_company.html", form=CompanyForm()), 200
-    if request.method == 'POST':
-            form = CompanyForm()
-            if form.validate_on_submit():
-                company = Company(
-                    name=request.form['name'],
-                    reg_code=request.form['reg_code'],
-                    start_date=request.form['start_date'],
-                    start_capital=request.form['start_capital']
-                )
-                db.session.add(company)
+    form = CompanyForm()
+    print(form.name.data)
+    if form.validate_on_submit():
+        company = Company(
+            name=form.name.data,
+            reg_code=form.reg_code.data,
+            start_date=form.start_date.data,
+            start_capital=form.start_capital.data
+        )
+        print(request.form.getlist('nat_first_name[]'))
+        # Add natural shareholders
+        nat_first_names = request.form.getlist('nat_first_name[]')
+        nat_last_names = request.form.getlist('nat_last_name[]')
+        nat_social_insurance_numbers = request.form.getlist('nat_sin[]')
+        nat_founders = request.form.getlist('nat_founder[]')
+        nat_shares = request.form.getlist('nat_shares[]')
 
-                for shareholder_form in form.legal_shareholders:
-                    shareholder = LegalShareHolder(
-                        name=shareholder_form.name.data,
-                        reg_code=shareholder_form.reg_code.data,
-                        founder=shareholder_form.founder.data,
-                        shares=shareholder_form.shares.data,
-                        company_id=company.reg_code
-                    )
-                    company.legal_shareholders.append(shareholder)
-                for shareholder_form in form.natural_shareholders:
-                    shareholder = NaturalShareHolder(
-                        first_name=shareholder_form.first_name.data,
-                        last_name=shareholder_form.last_name.data,
-                        social_insurance_number=shareholder_form.social_insurance_number.data,
-                        founder=shareholder_form.founder.data,
-                        shares=shareholder_form.shares.data,
-                        company_id=company.reg_code
-                    )
-                    company.natural_shareholders.append(shareholder)
+        for i in range(len(nat_first_names)):
+            natural_shareholder = NaturalShareHolder(
+                first_name=nat_first_names[i],
+                last_name=nat_last_names[i],
+                social_insurance_number=nat_social_insurance_numbers[i],
+                founder=nat_founders[i],
+                shares=nat_shares[i]
+            )
+            company.natural_shareholders.append(natural_shareholder)
 
-                db.session.commit()
-                return "Company created"
-            else:
-                return "Form is not valid"
+        # Add legal shareholders
+        leg_names = request.form.getlist('leg_name[]')
+        leg_reg_codes = request.form.getlist('leg_reg_code[]')
+        leg_founders = request.form.getlist('leg_founder[]')
+        leg_shares = request.form.getlist('leg_shares[]')
+        
+        for i in range(len(leg_names)):
+            legal_shareholder = LegalShareHolder(
+                name=leg_names[i],
+                reg_code=leg_reg_codes[i],
+                founder=leg_founders[i],
+                shares=leg_shares[i]
+            )
+            company.legal_shareholders.append(legal_shareholder)
+
+        db.session.add(company)
+        db.session.commit()
+        return redirect(url_for('main.get_company', id=company.id))
+    return render_template("new_company.html", form=form), 200
 
 @main_bp.route('/company/<int:id>', methods=['PUT'])
 def update_company(id):
