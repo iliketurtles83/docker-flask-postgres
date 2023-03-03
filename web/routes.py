@@ -31,8 +31,6 @@ def get_companies():
 @main_bp.route('/new_company', methods=['GET', 'POST'])
 def create_company():
     form = CompanyForm()
-    print(form.name.data)
-    print(request.form.getlist('nat_first_name[]'))
     if form.validate_on_submit():
         company = Company(
             name=form.name.data,
@@ -40,41 +38,33 @@ def create_company():
             start_date=form.start_date.data,
             start_capital=form.start_capital.data
         )
-        print(request.form.getlist('nat_first_name[]'))
-        # Add natural shareholders
-        nat_first_names = request.form.getlist('nat_first_name[]')
-        nat_last_names = request.form.getlist('nat_last_name[]')
-        nat_social_insurance_numbers = request.form.getlist('nat_sin[]')
-        nat_founders = request.form.getlist('nat_founder[]')
-        nat_shares = request.form.getlist('nat_shares[]')
-
-        for i in range(len(nat_first_names)):
-            natural_shareholder = NaturalShareHolder(
-                first_name=nat_first_names[i],
-                last_name=nat_last_names[i],
-                social_insurance_number=nat_social_insurance_numbers[i],
-                founder=nat_founders[i],
-                shares=nat_shares[i]
-            )
-            company.natural_shareholders.append(natural_shareholder)
-
-        # Add legal shareholders
-        leg_names = request.form.getlist('leg_name[]')
-        leg_reg_codes = request.form.getlist('leg_reg_code[]')
-        leg_founders = request.form.getlist('leg_founder[]')
-        leg_shares = request.form.getlist('leg_shares[]')
-        
-        for i in range(len(leg_names)):
-            legal_shareholder = LegalShareHolder(
-                name=leg_names[i],
-                reg_code=leg_reg_codes[i],
-                founder=leg_founders[i],
-                shares=leg_shares[i]
-            )
-            company.legal_shareholders.append(legal_shareholder)
-
         db.session.add(company)
         db.session.commit()
+
+        # Add natural shareholders
+        for shareholder_entry in form.natural_shareholders:
+            shareholder = NaturalShareHolder(
+                first_name=shareholder_entry.nat_first_name.data,
+                last_name=shareholder_entry.nat_last_name.data,
+                sin=shareholder_entry.nat_sin.data,
+                shares=shareholder_entry.nat_shares.data,
+                founder=shareholder_entry.nat_founder.data,
+                company_id=company.reg_code
+            )
+            db.session.add(shareholder)
+            db.commit()
+
+        # Add legal shareholders
+        for shareholder_entry in form.legal_shareholders:
+            shareholder = LegalShareHolder(
+                name=shareholder_entry.leg_name.data,
+                reg_code=shareholder_entry.leg_reg_code.data,
+                shares=shareholder_entry.leg_shares.data,
+                founder=shareholder_entry.leg_founder.data,
+                company_id=company.reg_code
+            )
+            db.session.add(shareholder)
+            db.commit()
         return redirect(url_for('main.get_company', id=company.id))
     return render_template("new_company.html", form=form), 200
 

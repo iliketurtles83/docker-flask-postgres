@@ -1,22 +1,11 @@
-/* #company input[type="text"], input[type="number"] {
-    width: 100%;
-    margin: 8px 0;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    display: inline-block;
-    border-radius: 4px;
-}
+.natural-shareholder-form {
+    padding-bottom: 5px;
+  }
 
-#company input[type="date"], input[type="boolean"] {
-    margin: 8px 0;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    display: inline-block;
-    border-radius: 4px;
-}
-*/
+.legal-shareholder-form {
+    padding-bottom: 5px;
+  }
+
 form {
     border-radius: 5px;
     background-color: #f2f2f2;
