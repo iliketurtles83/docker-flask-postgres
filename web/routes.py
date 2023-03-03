@@ -46,13 +46,13 @@ def create_company():
             shareholder = NaturalShareHolder(
                 first_name=shareholder_entry.nat_first_name.data,
                 last_name=shareholder_entry.nat_last_name.data,
-                sin=shareholder_entry.nat_sin.data,
+                social_insurance_number=shareholder_entry.nat_sin.data,
                 shares=shareholder_entry.nat_shares.data,
                 founder=shareholder_entry.nat_founder.data,
                 company_id=company.reg_code
             )
             db.session.add(shareholder)
-            db.commit()
+            db.session.commit()
 
         # Add legal shareholders
         for shareholder_entry in form.legal_shareholders:
@@ -64,7 +64,7 @@ def create_company():
                 company_id=company.reg_code
             )
             db.session.add(shareholder)
-            db.commit()
+            db.session.commit()
         return redirect(url_for('main.get_company', id=company.id))
     return render_template("new_company.html", form=form), 200
 

@@ -11,7 +11,7 @@
         <h2>Natural Shareholders</h2>
         <ul>
             {% for shareholder in company.natural_shareholders %}
-                <li>{{ shareholder.name }}</li>
+                <li>{{ shareholder.first_name }} {{ shareholder.last_name }}</li>
             {% endfor %}
         </ul>
         <h2>Legal Shareholders</h2>
