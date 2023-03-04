@@ -28,7 +28,7 @@ class NaturalShareHolder(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(100), nullable=False)
     last_name = db.Column(db.String(100), nullable=False)
-    social_insurance_number = db.Column(db.String, nullable=False, unique=True)
+    social_insurance_number = db.Column(db.String, nullable=False)
     founder = db.Column(db.Boolean)
     shares = db.Column(db.Integer)
 
@@ -49,7 +49,7 @@ class LegalShareHolder(db.Model):
     __tablename__ = 'legal_shareholders'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    reg_code = db.Column(db.Integer, nullable=False, unique=True)
+    reg_code = db.Column(db.Integer, nullable=False)
     founder = db.Column(db.Boolean)
     shares = db.Column(db.Integer)
 
