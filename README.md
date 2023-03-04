@@ -19,11 +19,13 @@ For practice purposes. But once finished, it can be easily copied and adapted to
 - [x] use __init__.py for Flask
 - [x] Flask separate config.py
 - [x] Routes via blueprints
-- [ ] Frontend for doing CRUD
+- [x] Add new entry
+- [ ] Update entry
+- [ ] Remove entry
 - [x] Nginx server container
 - [x] WSGI-Gunicorn
 - [ ] Reorganize Flask app folder structure
-- [ ] validation through Pydantic
+- [ ] validation through Pydantic?
 - [ ] User auth and respective routes
 - [ ] Redis?
 - [ ] Celery?
