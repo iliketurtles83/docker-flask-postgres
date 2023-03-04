@@ -5,21 +5,47 @@
         {% block content %}
         <div class="container">        
         <h1>Company: {{ company.name }}</h1>
-        <p>Reg Code: {{ company.reg_code }}</p>
-        <p>Start Capital: {{ company.start_capital }}</p>
-        <p>Start Date: {{ company.start_date }}</p>
-        <h2>Natural Shareholders</h2>
-        <ul>
+        Reg Code: {{ company.reg_code }}<br>
+        Start Capital: {{ company.start_capital }}<br>
+        Start Date: {{ company.start_date }}<br>
+        <h3>Natural Shareholders</h3>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Social Insurance Number</th>
+                    <th scope="col">Shares</th>
+                    <th scope="col">Founder</th>
+                </tr>
+            </thead>
             {% for shareholder in company.natural_shareholders %}
-                <li>{{ shareholder.first_name }} {{ shareholder.last_name }}</li>
+                <tr>
+                    <td>{{ shareholder.first_name }} {{ shareholder.last_name }}</td>
+                    <td>{{ shareholder.social_insurance_number }}</td>
+                    <td>{{ shareholder.shares }}</td>
+                    <td>{{ shareholder.founder }}</td>
+                </tr>
             {% endfor %}
-        </ul>
-        <h2>Legal Shareholders</h2>
-        <ul>
+        </table>
+        <h3>Legal Shareholders</h3>
+        <table class="table">
+            <tr>
+                <thead class="thead-light">
+                    <th>Name</th>
+                    <th>Reg Code</th>
+                    <th>Shares</th>
+                    <th>Founder</th>
+                </thead>
+            </tr>
             {% for shareholder in company.legal_shareholders %}
-                <li>{{ shareholder.name }}</li>
+                <tr>
+                    <td>{{ shareholder.name }}</td>
+                    <td>{{ shareholder.reg_code }}</td>
+                    <td>{{ shareholder.shares }}</td>
+                    <td>{{ shareholder.founder }}</td>
+                </tr>
             {% endfor %}
-        </ul>  
+        </table>
         </div>           
         {% endblock %}
     </body>

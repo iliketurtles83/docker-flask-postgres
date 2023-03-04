@@ -8,14 +8,16 @@
         {% block content %}
         <div class="container">
             <h1>Companies</h1>
-            <table id="companylist">
+            <table class="table">
                 <caption>List of registered companies</caption>
-                <tr>
-                    <th>Company Name</th>
-                    <th>Registration Code</th>
-                    <th>Start Capital</th>
-                    <th>Start Date</th>
-                </tr>
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Registration Code</th>
+                        <th>Start Capital</th>
+                        <th>Start Date</th>
+                    </tr>
+                </thead>
                 {% for company in companies %}
                     <tr>
                         <td><a href="{{ url_for('main.get_company', id=company.id) }}">{{ company.name }}</a></td>
