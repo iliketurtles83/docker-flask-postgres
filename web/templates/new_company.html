@@ -11,24 +11,23 @@
             <form action="{{ url_for('main.create_company') }}" method="POST">
                 <h3>Company Information</h3>
                 <div class="company">
-                {% if form.errors %}
-                    {{ form.errors }}
-                {% endif %}
-                {{ form.csrf_token }}
-                {{ form.hidden_tag() }}
-                <div class="form-group">
-                    {{ form.name.label }} {{ form.name(class_="form-control", placeholder="Company name") }}
-                 </div>
-                {{ form.reg_code.label }} {{ form.reg_code(class_="form-control", placeholder="Registration Code") }}
-                {{ form.start_capital.label }} {{ form.start_capital(class_="form-inline") }}
-                {{ form.start_date.label }} {{ form.start_date(class_="form-inline") }}
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ form.name.label }} {{ form.name(class_="form-control", placeholder="Company name") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.reg_code.label }} {{ form.reg_code(class_="form-control", placeholder="Registration Code") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.start_capital.label }} {{ form.start_capital(class_="form-inline") }}
+                        {{ form.start_date.label }} {{ form.start_date(class_="form-inline") }}
+                    </div>
                 </div>
                 <br>
                 <h3>Natural Shareholders</h3>
-                <div id="natural-shareholders" style="display: inline-block; padding: 2px;">
+                <div id="natural-shareholders">
                     {% for shareholder in form.natural_shareholders %}
                         <div class="natural-shareholder-form">
-
                             {{ shareholder.nat_first_name(class_="form-inline", placeholder="First Name") }}
                             {{ shareholder.nat_last_name(class_="form-inline",  placeholder="Last Name") }}
                             {{ shareholder.nat_sin(class_="form-inline",  placeholder="SIN") }}
@@ -37,11 +36,10 @@
                         </div>
                     {% endfor %}
                 </div>
-                    <br>
                     <button class="btn btn-success" id="add-natural-shareholder" type="button">Add</button>
                 <br>
                 <h3>Legal Shareholders</h3>
-                <div id="legal-shareholders" style="display: inline-block"> 
+                <div id="legal-shareholders"> 
                     {% for shareholder in form.legal_shareholders %}
                         <div class="legal-shareholder-form">
                             {{ shareholder.leg_name(class_="form-inline", placeholder="Name") }}
@@ -51,7 +49,6 @@
                         </div>
                     {% endfor %}
                 </div>
-                    <br>
                     <button class="btn btn-success" id="add-legal-shareholder" type="button">Add</button>
                     <br><br>
                     
@@ -62,30 +59,7 @@
 
         {% block scripts %}
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-            <script>
-            $(document).ready(function() {
-                $('#add-natural-shareholder').click(function() {
-                    var template = $('.natural-shareholder-form:first').clone();
-                    console.log(template)
-                    template.find('input').val('');
-                    // add remove button
-                    template.append('<button class="btn btn-sm btn-danger remove-shareholder" type="button">X</button>');
-                    template.insertAfter('.natural-shareholder-form:last');
-                });
-
-                $('#add-legal-shareholder').click(function() {
-                    var template = $('.legal-shareholder-form:first').clone();
-                    template.find('input').val('');
-                    // add remove button
-                    template.append('<button class="btn btn-sm btn-danger remove-shareholder" type="button">X</button>');
-                    template.insertAfter('.legal-shareholder-form:last');
-                });
-
-                $(document).on('click', '.remove-shareholder', function() {
-                    $(this).parent().remove();
-                });
-            });
-            </script>
+            <script src="{{ url_for('static', filename='js/script.js') }}"></script>
         {% endblock %}
     {% endblock %}
     </body>
