@@ -83,3 +83,13 @@ def update_company(id):
     company.start_capital = request.json['start_capital']
     db.session.commit()
     return jsonify(company.to_json())
+
+@main_bp.route('/company/<int:id>/delete')
+def delete_company(id):
+    print('delete company')
+    company = Company.query.get(id)
+    if company is None:
+        return jsonify({'message': 'Company not found'}), 404
+    db.session.delete(company)
+    db.session.commit()
+    return redirect(url_for('main.get_companies'))

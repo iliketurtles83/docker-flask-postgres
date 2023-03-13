@@ -16,6 +16,7 @@
                         <th>Registration Code</th>
                         <th>Start Capital</th>
                         <th>Start Date</th>
+                        <th>delete</th>
                     </tr>
                 </thead>
                 {% for company in companies %}
@@ -24,6 +25,12 @@
                         <td>{{ company.reg_code }}</td>
                         <td>{{ company.start_capital }}</td>
                         <td>{{ company.start_date }}</td>
+                        <td>
+                            <a href="{{ url_for('main.delete_company', id=company.id) }}" onclick="return confirm('Are you sure you want to delete {{ company.name }}?');" title="Delete company">
+                            <i class="material-icons">delete</i>
+                            </a>
+
+                            </td>
                     </tr>
                 {% endfor %}
             </table>
