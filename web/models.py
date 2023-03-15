@@ -32,7 +32,7 @@ class NaturalShareHolder(db.Model):
     founder = db.Column(db.Boolean)
     shares = db.Column(db.Integer)
 
-    company_id = db.Column(db.Integer, db.ForeignKey('companies.reg_code'), nullable=False)
+    company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False)
 
     def to_json(self):
         return {
@@ -53,7 +53,7 @@ class LegalShareHolder(db.Model):
     founder = db.Column(db.Boolean)
     shares = db.Column(db.Integer)
 
-    company_id = db.Column(db.Integer, db.ForeignKey('companies.reg_code'), nullable=False)
+    company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False)
 
     def to_json(self):
         return {

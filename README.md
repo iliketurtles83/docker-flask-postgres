@@ -20,12 +20,11 @@ For practice purposes. But once finished, it can be easily copied and adapted to
 - [x] Flask separate config.py
 - [x] Routes via blueprints
 - [x] Add new entry
-- [ ] Update entry
-- [ ] Remove entry
+- [ ] Update entry/entries
+- [x] Remove entry
 - [x] Nginx server container
 - [x] WSGI-Gunicorn
 - [ ] Reorganize Flask app folder structure
-- [ ] validation through Pydantic?
 - [ ] User auth and respective routes
 - [ ] Redis?
 - [ ] Celery?

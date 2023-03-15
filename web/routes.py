@@ -93,3 +93,21 @@ def delete_company(id):
     db.session.delete(company)
     db.session.commit()
     return redirect(url_for('main.get_companies'))
+
+@main_bp.route('/delete_natural/<int:id>')
+def delete_natural_shareholder(id):
+    shareholder = NaturalShareHolder.query.get(id)
+    if shareholder is None:
+        return jsonify({'message': 'Shareholder not found'}), 404
+    db.session.delete(shareholder)
+    db.session.commit()
+    return redirect(url_for('main.get_company', id=shareholder.company_id))
+
+@main_bp.route('/delete_legal/<int:id>')
+def delete_legal_shareholder(id):
+    shareholder = LegalShareHolder.query.get(id)
+    if shareholder is None:
+        return jsonify({'message': 'Shareholder not found'}), 404
+    db.session.delete(shareholder)
+    db.session.commit()
+    return redirect(url_for('main.get_company', id=shareholder.company_id))
