@@ -15,8 +15,8 @@ def get_company(id):
     company = Company.query.get(id)
     if company is None:
         return jsonify({'message': 'Company not found'}), 404
-    legal_shareholders = LegalShareHolder.query.filter_by(company_id=company.reg_code).all()
-    natural_shareholders = NaturalShareHolder.query.filter_by(company_id=company.reg_code).all()
+    legal_shareholders = LegalShareHolder.query.filter_by(company_id=company.id).all()
+    natural_shareholders = NaturalShareHolder.query.filter_by(company_id=company.id).all()
     if legal_shareholders is not None:
          company.legal_shareholders = legal_shareholders
     if natural_shareholders is not None:
@@ -40,6 +40,10 @@ def create_company():
         )
         db.session.add(company)
         db.session.commit()
+        
+        # get company id
+        company = Company.query.filter_by(reg_code=form.reg_code.data).first()
+        company_id = company.id
 
         # Add natural shareholders
         for shareholder_entry in form.natural_shareholders:
@@ -49,7 +53,7 @@ def create_company():
                 social_insurance_number=shareholder_entry.nat_sin.data,
                 shares=shareholder_entry.nat_shares.data,
                 founder=shareholder_entry.nat_founder.data,
-                company_id=company.reg_code
+                company_id=company_id
             )
             db.session.add(shareholder)
             db.session.commit()
@@ -61,7 +65,7 @@ def create_company():
                 reg_code=shareholder_entry.leg_reg_code.data,
                 shares=shareholder_entry.leg_shares.data,
                 founder=shareholder_entry.leg_founder.data,
-                company_id=company.reg_code
+                company_id=company_id
             )
             db.session.add(shareholder)
             db.session.commit()
