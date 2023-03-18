@@ -8,6 +8,8 @@
         Reg Code: {{ company.reg_code }}<br>
         Start Capital: {{ company.start_capital }}<br>
         Start Date: {{ company.start_date }}<br>
+        <a href="{{ url_for('main.update_company', id=company.id) }}" class="btn btn-primary">Change Name</a>
+        <br>
         <h3>Natural Shareholders</h3>
         <table class="table">
             <thead class="thead-dark">
@@ -32,6 +34,35 @@
                 </tr>
             {% endfor %}
         </table>
+
+        <!-- Add natural shareholder modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNaturalShareholderModal">
+            Add Natural Shareholder</button>
+        <div class="modal fade" id="addNaturalShareholderModal" tabindex="-1" aria-labelledby="addNaturalShareholderModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addNaturalShareholderModalLabel">Add Natural Shareholder</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="{{ url_for('main.add_natural_shareholder', id=company.id) }}">
+                            {{ natural_form.csrf_token }}
+                            {{ natural_form.first_name.label }} {{ natural_form.first_name(class_="form-control") }}
+                            {{ natural_form.last_name.label }} {{ natural_form.last_name(class_="form-control") }}
+                            {{ natural_form.sin.label }} {{ natural_form.sin(class_="form-control") }}
+                            {{ natural_form.shares.label }} {{ natural_form.shares(class_="form-control") }}
+                            {{ natural_form.founder.label }} {{ natural_form.founder(class_="form-inline") }}
+                    </div>        
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br>
         <h3>Legal Shareholders</h3>
         <table class="table">
             <tr>
@@ -56,7 +87,39 @@
                 </tr>
             {% endfor %}
         </table>
-        </div>           
+        
+        <!-- Add legal shareholder modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addLegalShareholderModal">
+            Add Legal Shareholder</button>
+            <div class="modal fade" id="addLegalShareholderModal" tabindex="-1" aria-labelledby="addNaturalShareholderModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addLegalShareholderModalLabel">Add Legal Shareholder</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>    
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="{{ url_for('main.add_legal_shareholder', id=company.id) }}">
+                                {{ legal_form.csrf_token }}
+                                {{ legal_form.leg_name.label }} {{ legal_form.leg_name(class_="form-control") }}
+                                {{ legal_form.reg_code.label }} {{ legal_form.reg_code(class_="form-control") }}
+                                {{ legal_form.shares.label }} {{ legal_form.shares(class_="form-control") }}
+                                {{ legal_form.founder.label }} {{ legal_form.founder(class_="form-inline") }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        <br> 
+        </div>
+        
+        {{ bootstrap.load_js() }}
+        
         {% endblock %}
     </body>
 </html>

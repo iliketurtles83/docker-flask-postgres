@@ -1,7 +1,7 @@
 
 from flask import Blueprint, jsonify, redirect, request, render_template, url_for
 
-from web.forms import CompanyForm
+from web.forms import CompanyForm, LegalShareholderForm, NaturalShareholderForm
 from web.models import db, Company, NaturalShareHolder, LegalShareHolder
 
 main_bp = Blueprint('main', __name__)
@@ -21,7 +21,7 @@ def get_company(id):
          company.legal_shareholders = legal_shareholders
     if natural_shareholders is not None:
         company.natural_shareholders = natural_shareholders
-    return render_template('details.html', company=company), 200
+    return render_template('details.html', company=company, legal_form=LegalShareholderForm(), natural_form=NaturalShareholderForm()), 200
 
 @main_bp.route('/company/list', methods=['GET'])
 def get_companies():
@@ -40,7 +40,7 @@ def create_company():
         )
         db.session.add(company)
         db.session.commit()
-        
+
         # get company id
         company = Company.query.filter_by(reg_code=form.reg_code.data).first()
         company_id = company.id
@@ -48,11 +48,11 @@ def create_company():
         # Add natural shareholders
         for shareholder_entry in form.natural_shareholders:
             shareholder = NaturalShareHolder(
-                first_name=shareholder_entry.nat_first_name.data,
-                last_name=shareholder_entry.nat_last_name.data,
-                social_insurance_number=shareholder_entry.nat_sin.data,
-                shares=shareholder_entry.nat_shares.data,
-                founder=shareholder_entry.nat_founder.data,
+                first_name=shareholder_entry.first_name.data,
+                last_name=shareholder_entry.last_name.data,
+                social_insurance_number=shareholder_entry.sin.data,
+                shares=shareholder_entry.shares.data,
+                founder=shareholder_entry.founder.data,
                 company_id=company_id
             )
             db.session.add(shareholder)
@@ -62,9 +62,9 @@ def create_company():
         for shareholder_entry in form.legal_shareholders:
             shareholder = LegalShareHolder(
                 name=shareholder_entry.leg_name.data,
-                reg_code=shareholder_entry.leg_reg_code.data,
-                shares=shareholder_entry.leg_shares.data,
-                founder=shareholder_entry.leg_founder.data,
+                reg_code=shareholder_entry.reg_code.data,
+                shares=shareholder_entry.shares.data,
+                founder=shareholder_entry.founder.data,
                 company_id=company_id
             )
             db.session.add(shareholder)
@@ -72,31 +72,60 @@ def create_company():
         return redirect(url_for('main.get_company', id=company.id))
     return render_template("new_company.html", form=form), 200
 
-@main_bp.route('/company/<int:id>', methods=['PUT'])
-def update_company(id):
-    if not request.json:
-        return jsonify({'message': 'Bad request'}), 400
+@main_bp.route('/company/<int:id>/update', methods=['GET', 'POST'])
+def update_company(id): 
+    company = Company.query.get_or_404(id)
     
-    company = Company.query.get(id)
-    if company is None:
-        return jsonify({'message': 'Company not found'}), 404
-    
-    company.name = request.json['name']
-    company.reg_code = request.json['reg_code']
-    company.start_date = request.json['start_date']
-    company.start_capital = request.json['start_capital']
-    db.session.commit()
-    return jsonify(company.to_json())
+    form=CompanyForm(obj=company)
+    print(form.validate_on_submit())
+    if form.validate_on_submit():
+        form.populate_obj(company)
+        # write changes to db
+        db.session.commit()
+        return redirect(url_for('main.get_company', id=company.id))
+    return render_template('update.html', form=form, company=company), 200
 
 @main_bp.route('/company/<int:id>/delete')
 def delete_company(id):
-    print('delete company')
     company = Company.query.get(id)
     if company is None:
         return jsonify({'message': 'Company not found'}), 404
+
     db.session.delete(company)
     db.session.commit()
     return redirect(url_for('main.get_companies'))
+
+@main_bp.route('/company/<int:id>/add_natural', methods=['GET', 'POST'])
+def add_natural_shareholder(id):
+    form = NaturalShareholderForm()
+    if form.validate_on_submit():
+        shareholder = NaturalShareHolder(
+            first_name=form.first_name.data,
+            last_name=form.last_name.data,
+            social_insurance_number=form.sin.data,
+            shares=form.shares.data,
+            founder=form.founder.data,
+            company_id=id
+        )
+        db.session.add(shareholder)
+        db.session.commit()
+        return redirect(url_for('main.get_company', id=id))
+    
+@main_bp.route('/company/<int:id>/add_legal', methods=['GET', 'POST'])
+def add_legal_shareholder(id):
+    form = LegalShareholderForm()
+    if form.validate_on_submit():
+        shareholder = LegalShareHolder(
+            name=form.leg_name.data,
+            reg_code=form.reg_code.data,
+            shares=form.shares.data,
+            founder=form.founder.data,
+            company_id=id
+        )
+        db.session.add(shareholder)
+        db.session.commit()
+        return redirect(url_for('main.get_company', id=id))
+
 
 @main_bp.route('/delete_natural/<int:id>')
 def delete_natural_shareholder(id):

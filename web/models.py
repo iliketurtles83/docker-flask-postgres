@@ -11,8 +11,8 @@ class Company(db.Model):
     start_date = db.Column(db.Date, default=datetime.date.today)
     start_capital = db.Column(db.Integer, nullable=False)
 
-    natural_shareholders = db.relationship("NaturalShareHolder", backref="company", lazy=True)
-    legal_shareholders = db.relationship("LegalShareHolder", backref="company", lazy=True)
+    natural_shareholders = db.relationship("NaturalShareHolder", backref="company", lazy=True, cascade="all, delete-orphan")
+    legal_shareholders = db.relationship("LegalShareHolder", backref="company", lazy=True, cascade="all, delete-orphan")
 
     def to_json(self):
         return {
