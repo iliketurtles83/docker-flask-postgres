@@ -16,7 +16,7 @@ For practice purposes. But once finished, it can be easily copied and adapted to
 - [x] models for SQLAlchemy
 - [x] Postgres container
 - [x] Postgres integration into Flask
-- [x] use __init__.py for Flask
+- [ ] use __init__.py for Flask
 - [x] Flask separate config.py
 - [x] Routes via blueprints
 - [x] Add new entry
