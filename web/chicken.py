@@ -4,7 +4,7 @@ from flask_wtf import CSRFProtect
 from web.models import db
 from web.config import Config
 from web.routes import main_bp
-from flask_migrate import Migrate
+# from flask_migrate import Migrate
 
 csrf = CSRFProtect()
 
@@ -15,7 +15,6 @@ def create_app(config_name=Config):
     csrf.init_app(app)
     db.init_app(app)
     # migrate = Migrate(app, db)
-    # print(type(migrate))
     Bootstrap5(app)
     app.register_blueprint(main_bp)
 
