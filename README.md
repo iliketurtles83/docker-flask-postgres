@@ -31,8 +31,8 @@ For practice purposes. But once finished, it can be easily copied and adapted to
 - [ ] RabbitMQ?
 
 ### Errors
-- '''docker compose exec web python manage.py create_db''' does not work, i'm still learning how to do this properly
-- for now, go to the flask container shell with '''docker exec -it web sh''', run flask shell, then import db and db.create_all()
+- ```docker compose exec web python manage.py create_db``` does not work, i'm still learning how to do this properly
+- for now, go to the flask container shell with ```docker exec -it web sh```, run flask shell, then import db and db.create_all()
 
 ### Instructions
 1. Rename .env_flask.sample and .env_pg.sample to .env_flask and .env_pg
@@ -40,6 +40,6 @@ For practice purposes. But once finished, it can be easily copied and adapted to
 3. Run 'chmod +x entrypoint.sh' (not sure if Github keeps permissions)
 4. Run 'docker compose build'
 5. Run 'docker compose up'
-6. '''docker compose exec web python manage.py create_db''' to create tables
+6. ```docker compose exec web python manage.py create_db``` to create tables
 7. ???
 8. Profit
