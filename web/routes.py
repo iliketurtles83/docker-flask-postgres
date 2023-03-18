@@ -12,9 +12,8 @@ def hello():
 
 @main_bp.route('/company/<int:id>', methods=['GET'])
 def get_company(id):
-    company = Company.query.get(id)
-    if company is None:
-        return jsonify({'message': 'Company not found'}), 404
+    company = Company.query.get_or_404(id)
+
     legal_shareholders = LegalShareHolder.query.filter_by(company_id=company.id).all()
     natural_shareholders = NaturalShareHolder.query.filter_by(company_id=company.id).all()
     if legal_shareholders is not None:
@@ -72,24 +71,16 @@ def create_company():
         return redirect(url_for('main.get_company', id=company.id))
     return render_template("new_company.html", form=form), 200
 
-@main_bp.route('/company/<int:id>/update', methods=['GET', 'POST'])
-def update_company(id): 
+@main_bp.route('/company/<int:id>/update', methods=['POST'])
+def update_company(id):
     company = Company.query.get_or_404(id)
-    
-    form=CompanyForm(obj=company)
-    print(form.validate_on_submit())
-    if form.validate_on_submit():
-        form.populate_obj(company)
-        # write changes to db
-        db.session.commit()
-        return redirect(url_for('main.get_company', id=company.id))
-    return render_template('update.html', form=form, company=company), 200
+    company.name = request.form['name']
+    db.session.commit()
+    return redirect(url_for('main.get_company', id=company.id))
 
 @main_bp.route('/company/<int:id>/delete')
 def delete_company(id):
-    company = Company.query.get(id)
-    if company is None:
-        return jsonify({'message': 'Company not found'}), 404
+    company = Company.query.get_or_404(id)
 
     db.session.delete(company)
     db.session.commit()
@@ -126,21 +117,16 @@ def add_legal_shareholder(id):
         db.session.commit()
         return redirect(url_for('main.get_company', id=id))
 
-
 @main_bp.route('/delete_natural/<int:id>')
 def delete_natural_shareholder(id):
-    shareholder = NaturalShareHolder.query.get(id)
-    if shareholder is None:
-        return jsonify({'message': 'Shareholder not found'}), 404
+    shareholder = NaturalShareHolder.query.get_or_404(id)
     db.session.delete(shareholder)
     db.session.commit()
     return redirect(url_for('main.get_company', id=shareholder.company_id))
 
 @main_bp.route('/delete_legal/<int:id>')
 def delete_legal_shareholder(id):
-    shareholder = LegalShareHolder.query.get(id)
-    if shareholder is None:
-        return jsonify({'message': 'Shareholder not found'}), 404
+    shareholder = LegalShareHolder.query.get_or_404(id)
     db.session.delete(shareholder)
     db.session.commit()
     return redirect(url_for('main.get_company', id=shareholder.company_id))

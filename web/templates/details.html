@@ -8,10 +8,35 @@
         Reg Code: {{ company.reg_code }}<br>
         Start Capital: {{ company.start_capital }}<br>
         Start Date: {{ company.start_date }}<br>
-        <a href="{{ url_for('main.update_company', id=company.id) }}" class="btn btn-primary">Change Name</a>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editCompanyModal">
+            Edit Name</button>
+        <div class="modal fade" id="editCompanyModal" tabindex="-1" aria-labelledby="editCompanyModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCompanyModalLabel">Edit Company Name</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="{{ url_for('main.update_company', id=company.id) }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <label for="name">Name:</label>
+                            <input type="text" name="name" class="form-control" value="{{ company.name }}">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
         <br>
         <h3>Natural Shareholders</h3>
         <table class="table">
+            <caption>List of natural shareholders</caption>
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Name</th>
@@ -63,12 +88,14 @@
             </div>
         </div>
         <br>
+        <br>
         <h3>Legal Shareholders</h3>
         <table class="table">
+            <caption>List of legal shareholders</caption>
             <tr>
                 <thead class="thead-light">
                     <th>Name</th>
-                    <th>Reg Code</th>
+                    <th>Registration Code</th>
                     <th>Shares</th>
                     <th>Founder</th>
                 </thead>
