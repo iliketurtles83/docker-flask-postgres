@@ -28,11 +28,11 @@
                 <div id="natural-shareholders">
                     {% for shareholder in form.natural_shareholders %}
                         <div class="natural-shareholder-form">
-                            {{ shareholder.nat_first_name(class_="form-inline", placeholder="First Name") }}
-                            {{ shareholder.nat_last_name(class_="form-inline",  placeholder="Last Name") }}
-                            {{ shareholder.nat_sin(class_="form-inline",  placeholder="SIN") }}
-                            {{ shareholder.nat_shares(class_="form-inline", placeholder="Shares") }}
-                            {{ shareholder.nat_founder.label }} {{ shareholder.nat_founder(class_="form-inline") }}
+                            {{ shareholder.first_name(class_="form-inline", placeholder="First Name") }}
+                            {{ shareholder.last_name(class_="form-inline",  placeholder="Last Name") }}
+                            {{ shareholder.sin(class_="form-inline",  placeholder="SIN") }}
+                            {{ shareholder.shares(class_="form-inline", placeholder="Shares") }}
+                            {{ shareholder.founder.label }} {{ shareholder.founder(class_="form-inline") }}
                         </div>
                     {% endfor %}
                 </div>
@@ -43,9 +43,9 @@
                     {% for shareholder in form.legal_shareholders %}
                         <div class="legal-shareholder-form">
                             {{ shareholder.leg_name(class_="form-inline", placeholder="Name") }}
-                            {{ shareholder.leg_reg_code(class_="form-inline", placeholder="Registration Code") }}
-                            {{ shareholder.leg_shares(class_="form-inline", placeholder="Shares") }}
-                            {{ shareholder.leg_founder.label }} {{ shareholder.leg_founder(class_="form-inline") }}
+                            {{ shareholder.reg_code(class_="form-inline", placeholder="Registration Code") }}
+                            {{ shareholder.shares(class_="form-inline", placeholder="Shares") }}
+                            {{ shareholder.founder.label }} {{ shareholder.founder(class_="form-inline") }}
                         </div>
                     {% endfor %}
                 </div>

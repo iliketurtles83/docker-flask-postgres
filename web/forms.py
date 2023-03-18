@@ -4,18 +4,18 @@ from wtforms.validators import DataRequired, ValidationError, NumberRange
 
 class LegalShareholderForm(FlaskForm):
     leg_name = StringField('Name', validators=[DataRequired()])
-    leg_reg_code = StringField('Registration Code', validators=[DataRequired()])
-    leg_shares = DecimalField('Shares', validators=[DataRequired(), NumberRange(min=1)])
-    leg_founder = BooleanField('Founder')
-    _leg_founder_ = HiddenField('Founder', default=False)
+    reg_code = StringField('Registration Code', validators=[DataRequired()])
+    shares = DecimalField('Shares', validators=[DataRequired(), NumberRange(min=1)])
+    founder = BooleanField('Founder')
+    _founder_ = HiddenField('Founder', default=False)
 
 class NaturalShareholderForm(FlaskForm):
-    nat_first_name = StringField('Name', validators=[DataRequired()], description='First Name')
-    nat_last_name = StringField('Last Name', validators=[DataRequired()])
-    nat_sin = IntegerField('Social Insurance Number', validators=[DataRequired()])
-    nat_shares = DecimalField('Shares', validators=[DataRequired(), NumberRange(min=1)])
-    nat_founder = BooleanField('Founder')
-    _nat_founder_ = HiddenField('Founder', default=False)
+    first_name = StringField('Name', validators=[DataRequired()], description='First Name')
+    last_name = StringField('Last Name', validators=[DataRequired()])
+    sin = IntegerField('Social Insurance Number', validators=[DataRequired()])
+    shares = DecimalField('Shares', validators=[DataRequired(), NumberRange(min=1)])
+    founder = BooleanField('Founder')
+    _founder_ = HiddenField('Founder', default=False)
 
 class CompanyForm(FlaskForm):
     name = StringField('Name:', validators=[DataRequired()], description='Company Name')
