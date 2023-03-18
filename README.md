@@ -30,6 +30,10 @@ For practice purposes. But once finished, it can be easily copied and adapted to
 - [ ] Celery?
 - [ ] RabbitMQ?
 
+### Errors
+- 'docker compose exec web python manage.py create_db' does not work, i'm still learning how to do this properly
+- for no go to the flask container shell with 'docker exec -it web sh', run flask shell, then import db and db.create_all()
+
 ### Instructions
 1. Rename .env_flask.sample and .env_pg.sample to .env_flask and .env_pg
 2. Replace your Postgres username, password and db_name in both files.
