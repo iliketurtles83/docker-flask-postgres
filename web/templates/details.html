@@ -4,12 +4,12 @@
     <body>
         {% block content %}
         <div class="container">        
-        <h1>Company: {{ company.name }}</h1>
+        <h1>{{ company.name }} Details</h1>
         Reg Code: {{ company.reg_code }}<br>
         Start Capital: {{ company.start_capital }}<br>
         Start Date: {{ company.start_date }}<br>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editCompanyModal">
-            Edit Name</button>
+            Change Name</button>
         <div class="modal fade" id="editCompanyModal" tabindex="-1" aria-labelledby="editCompanyModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -35,14 +35,15 @@
         <br>
         <br>
         <h3>Natural Shareholders</h3>
-        <table class="table">
-            <caption>List of natural shareholders</caption>
+        <table class="table align-middle">
+            <caption class="visually-hidden">Natural Shareholders</caption>
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Social Insurance Number</th>
                     <th scope="col">Shares</th>
                     <th scope="col">Founder</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             {% for shareholder in company.natural_shareholders %}
@@ -52,9 +53,25 @@
                     <td>{{ shareholder.shares }}</td>
                     <td>{{ shareholder.founder }}</td>
                     <td>
-                        <a href="{{ url_for('main.delete_natural_shareholder', id=shareholder.id) }}" onclick="return confirm('Are you sure you want to delete {{ shareholder.first_name }}?');" title="Delete shareholder">
-                            <i class="material-icons">Delete</i>
-                        </a>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteNaturalModal">
+                            Remove</button>
+                        <div class="modal fade" id="deleteNaturalModal" tabindex="-1" aria-labelledby="deleteNaturalModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteNaturalModalLabel">Remove Natural Shareholder</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to remove {{ shareholder.first_name }} {{ shareholder.last_name }}?
+                                    </div>        
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('main.delete_natural_shareholder', id=shareholder.id) }}';">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}
@@ -73,11 +90,21 @@
                     <div class="modal-body">
                         <form method="POST" action="{{ url_for('main.add_natural_shareholder', id=company.id) }}">
                             {{ natural_form.csrf_token }}
-                            {{ natural_form.first_name.label }} {{ natural_form.first_name(class_="form-control") }}
-                            {{ natural_form.last_name.label }} {{ natural_form.last_name(class_="form-control") }}
-                            {{ natural_form.sin.label }} {{ natural_form.sin(class_="form-control") }}
-                            {{ natural_form.shares.label }} {{ natural_form.shares(class_="form-control") }}
-                            {{ natural_form.founder.label }} {{ natural_form.founder(class_="form-inline") }}
+                            <div class="mb-3">
+                                {{ natural_form.first_name.label }} {{ natural_form.first_name(class_="form-control") }}
+                            </div>
+                            <div class="mb-3">
+                                {{ natural_form.last_name.label }} {{ natural_form.last_name(class_="form-control") }}
+                            </div>
+                            <div class="mb-3">
+                                {{ natural_form.sin.label }} {{ natural_form.sin(class_="form-control") }}
+                            </div>
+                            <div class="mb-3">
+                                {{ natural_form.shares.label }} {{ natural_form.shares(class_="form-control") }}
+                            </div>
+                            <div class="mb-3">
+                                {{ natural_form.founder.label }} {{ natural_form.founder(class_="form-inline") }}
+                            </div>
                     </div>        
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -87,17 +114,17 @@
                 </div>
             </div>
         </div>
-        <br>
-        <br>
+        <br><br><br>
         <h3>Legal Shareholders</h3>
-        <table class="table">
-            <caption>List of legal shareholders</caption>
+        <table class="table align-middle">
+            <caption class="visually-hidden">Legal Shareholders</caption>
             <tr>
                 <thead class="thead-light">
-                    <th>Name</th>
-                    <th>Registration Code</th>
-                    <th>Shares</th>
-                    <th>Founder</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Registration Code</th>
+                    <th scope="col">Shares</th>
+                    <th scope="col">Founder</th>
+                    <th scope="col"></th>
                 </thead>
             </tr>
             {% for shareholder in company.legal_shareholders %}
@@ -107,9 +134,25 @@
                     <td>{{ shareholder.shares }}</td>
                     <td>{{ shareholder.founder }}</td>
                     <td>
-                        <a href="{{ url_for('main.delete_legal_shareholder', id=shareholder.id) }}" onclick="return confirm('Are you sure you want to delete {{ shareholder.name }}?');" title="Delete shareholder">
-                            <i class="material-icons">Delete</i>
-                        </a>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteLegalModal">
+                            Remove</button>
+                        <div class="modal fade" id="deleteLegalModal" tabindex="-1" aria-labelledby="deleteLegalModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteLegalModalLabel">Remove Legal Shareholder</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to remove {{ shareholder.name }}?
+                                    </div>        
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('main.delete_legal_shareholder', id=shareholder.id) }}';">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}
@@ -128,10 +171,18 @@
                         <div class="modal-body">
                             <form method="POST" action="{{ url_for('main.add_legal_shareholder', id=company.id) }}">
                                 {{ legal_form.csrf_token }}
-                                {{ legal_form.leg_name.label }} {{ legal_form.leg_name(class_="form-control") }}
-                                {{ legal_form.reg_code.label }} {{ legal_form.reg_code(class_="form-control") }}
-                                {{ legal_form.shares.label }} {{ legal_form.shares(class_="form-control") }}
-                                {{ legal_form.founder.label }} {{ legal_form.founder(class_="form-inline") }}
+                                <div class="mb-3">
+                                    {{ legal_form.leg_name.label }} {{ legal_form.leg_name(class_="form-control") }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ legal_form.reg_code.label }} {{ legal_form.reg_code(class_="form-control") }}
+                                </div>
+                                <div class="mb-3">    
+                                    {{ legal_form.shares.label }} {{ legal_form.shares(class_="form-control") }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ legal_form.founder.label }} {{ legal_form.founder(class_="form-inline") }}
+                                </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
