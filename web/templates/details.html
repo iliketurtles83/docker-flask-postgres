@@ -5,9 +5,9 @@
         {% block content %}
         <div class="container">        
         <h1>{{ company.name }} Details</h1>
-        Reg Code: {{ company.reg_code }}<br>
-        Start Capital: {{ company.start_capital }}<br>
-        Start Date: {{ company.start_date }}<br>
+        <p>Reg Code: {{ company.reg_code }}</p>
+        <p>Start Capital: {{ company.start_capital }}</p>
+        <p>Start Date: {{ company.start_date }}</p>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editCompanyModal">
             Change Name</button>
         <div class="modal fade" id="editCompanyModal" tabindex="-1" aria-labelledby="editCompanyModalLabel" aria-hidden="true">
@@ -78,7 +78,7 @@
         </table>
 
         <!-- Add natural shareholder modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNaturalShareholderModal">
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addNaturalShareholderModal">
             Add Natural Shareholder</button>
         <div class="modal fade" id="addNaturalShareholderModal" tabindex="-1" aria-labelledby="addNaturalShareholderModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -159,7 +159,7 @@
         </table>
         
         <!-- Add legal shareholder modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addLegalShareholderModal">
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addLegalShareholderModal">
             Add Legal Shareholder</button>
             <div class="modal fade" id="addLegalShareholderModal" tabindex="-1" aria-labelledby="addNaturalShareholderModalLabel" aria-hidden="true">
                 <div class="modal-dialog">

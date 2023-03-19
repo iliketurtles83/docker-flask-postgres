@@ -7,19 +7,18 @@
     <body>
     {% block content %}
         <div id="container">
-            <h2>Please fill out the fields</h2>
+            <h2>New Company Registration</h2>
             <form action="{{ url_for('main.create_company') }}" method="POST">
-                <h3>Company Information</h3>
-                <div class="company">
+                <div class="form-group">
                     {{ form.hidden_tag() }}
-                    <div class="form-group">
+                    <div class="mb-3">
                         {{ form.name.label }} {{ form.name(class_="form-control", placeholder="Company name") }}
                     </div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         {{ form.reg_code.label }} {{ form.reg_code(class_="form-control", placeholder="Registration Code") }}
                     </div>
-                    <div class="form-group">
-                        {{ form.start_capital.label }} {{ form.start_capital(class_="form-inline") }}
+                    <div class="mb-3">
+                        {{ form.start_capital.label }} {{ form.start_capital(class_="form-inline") }}&emsp;
                         {{ form.start_date.label }} {{ form.start_date(class_="form-inline") }}
                     </div>
                 </div>
