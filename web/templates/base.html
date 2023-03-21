@@ -13,5 +13,7 @@
         {% include 'navbar.html' %}
 
         {% block content %}{% endblock %}
+
+        {{ bootstrap.load_js() }}
     </body>
 </html>
