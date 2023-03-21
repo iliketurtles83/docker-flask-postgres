@@ -1,5 +1,5 @@
 
-from flask import Blueprint, jsonify, redirect, request, render_template, url_for
+from flask import Blueprint, redirect, request, render_template, url_for
 
 from web.forms import CompanyForm, LegalShareholderForm, NaturalShareholderForm
 from web.models import db, Company, NaturalShareHolder, LegalShareHolder
