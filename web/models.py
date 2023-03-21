@@ -1,7 +1,30 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 import datetime
+import bcrypt
 
 db = SQLAlchemy()
+
+class User(UserMixin, db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    password = db.Column(db.String(128), nullable=False)
+    email = db.Column(db.String(100), nullable=False, unique=True)
+
+    def get_id(self):
+        return self.id
+    
+    def is_authenticated(self):
+        return True
+    
+    def is_active(self):
+        return True
+    
+    def is_anonymous(self):
+        return False
+    
+    def get_company_id(self):
+        return self.company_id
 
 class Company(db.Model):
     __tablename__ = 'companies'
@@ -14,15 +37,6 @@ class Company(db.Model):
     natural_shareholders = db.relationship("NaturalShareHolder", backref="company", lazy=True, cascade="all, delete-orphan")
     legal_shareholders = db.relationship("LegalShareHolder", backref="company", lazy=True, cascade="all, delete-orphan")
 
-    def to_json(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'reg_code': self.reg_code,
-            'start_date': str(self.start_date),
-            'start_capital': self.start_capital
-        }
-
 class NaturalShareHolder(db.Model):
     __tablename__ = 'natural_shareholders'
     id = db.Column(db.Integer, primary_key=True)
@@ -33,17 +47,6 @@ class NaturalShareHolder(db.Model):
     shares = db.Column(db.Integer)
 
     company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False)
-
-    def to_json(self):
-        return {
-            'id': self.id,
-            'first_name': self.first_name,
-            'last_name': self.last_name,
-            'social_insurance_number': self.social_insurance_number,
-            'company_id': self.company_id,
-            'founder': self.founder,
-            'shares': self.shares
-        }
     
 class LegalShareHolder(db.Model):
     __tablename__ = 'legal_shareholders'
@@ -54,13 +57,3 @@ class LegalShareHolder(db.Model):
     shares = db.Column(db.Integer)
 
     company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False)
-
-    def to_json(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'reg_code': self.reg_code,
-            'company_id': self.company_id,
-            'founder': self.founder,
-            'shares': self.shares
-        }

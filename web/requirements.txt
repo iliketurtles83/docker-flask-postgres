@@ -2,9 +2,12 @@ Flask
 werkzeug
 Flask-SQLAlchemy
 Flask-Migrate
+Flask-Login
 bootstrap-flask
 flask_wtf
 wtforms
+wtforms-components
 psycopg2-binary
 gunicorn
 jinja2
+bcrypt

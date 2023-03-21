@@ -3,6 +3,10 @@ from datetime import date
 from wtforms import StringField, DateField, DecimalField, FieldList, FormField, BooleanField, HiddenField, SubmitField, IntegerField
 from wtforms.validators import DataRequired, ValidationError, NumberRange
 
+class LoginForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired()])
+    password = StringField('Password', validators=[DataRequired()])
+
 class LegalShareholderForm(FlaskForm):
     leg_name = StringField('Name', validators=[DataRequired()])
     reg_code = StringField('Registration Code', validators=[DataRequired()])
@@ -21,12 +25,16 @@ class NaturalShareholderForm(FlaskForm):
 class CompanyForm(FlaskForm):
     name = StringField('Name:', validators=[DataRequired()], description='Company Name')
     reg_code = IntegerField('Registration Code:', validators=[DataRequired()])
-    start_date = DateField('Start Date:', validators=[DataRequired(), NumberRange(min=date(1900, 1, 1), max=date.today())])
+    start_date = DateField('Start Date:', validators=[DataRequired()])
     start_capital = DecimalField('Starting Capital:', validators=[DataRequired(), NumberRange(min=1)])
     legal_shareholders = FieldList(FormField(LegalShareholderForm), min_entries=1, max_entries=5)
     natural_shareholders = FieldList(FormField(NaturalShareholderForm), min_entries=1, max_entries=5)
     submit = SubmitField('Register')
 
-    def validate_shareholders(self, field):
+    def validate_start_date(self, field):
+        if field.data > date.today():
+            raise ValidationError('Start Date cannot be in the future')
+
+    def validate_natural_shareholders(self, field):
         if not field.entries:
             raise ValidationError('You must add at least one shareholder')

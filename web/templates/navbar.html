@@ -15,6 +15,72 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('main.create_company') }}">Add New</a>
                 </li>
+                {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalLoginForm">Login</a>
+                    <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="modalLoginFormLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header text-center">
+                                    <h5 class="modal-title" id="modalLoginFormLabel">Sign in</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" action="{{ url_for('auth.login') }}">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <div class="mb-3">
+                                            <input type="email" id="email" name="email" class="form-control validate" placeholder="e-mail">
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="password" id="password" name="password" class="form-control validate" placeholder="password">
+                                </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="form-group text-center">
+                                        <button type="submit" class="btn btn-primary">Login</button>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>    
+                </li>
+                <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalRegisterForm">Sign Up</a>
+                        <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="modalRegisterFormLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header text-center">
+                                        <h5 class="modal-title" id="modalRegisterFormLabel">Register Account</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST" action="{{ url_for('auth.create_user') }}">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                            <div class="mb-3">
+                                                <input type="email" id="email" name="email" class="form-control validate" placeholder="e-mail">
+                                            </div>
+                                            <div class="mb-3">
+                                                <input type="password" id="password" name="password" class="form-control validate" placeholder="password">
+                                    </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="form-group text-center">
+                                            <button type="submit" class="btn btn-primary">Register</button>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </div>
