@@ -1,10 +1,10 @@
 from flask_bootstrap import Bootstrap5
 from flask import Flask
 from flask_wtf import CSRFProtect
-from web.models import db, User
-from web.config import Config
-from web.routes import main_bp
-from web.auth import auth
+from project.models import db, User
+from project.config import Config
+from project.routes import main_bp
+from project.auth import auth
 from flask_login import LoginManager
 # from flask_migrate import Migrate
 
@@ -29,3 +29,5 @@ def create_app(config_name=Config):
     app.register_blueprint(auth)
 
     return app
+
+app = create_app()

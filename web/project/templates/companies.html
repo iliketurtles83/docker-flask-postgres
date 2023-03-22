@@ -27,7 +27,7 @@
                         <td>{{ company.reg_code }}</td>
                         <td>{{ company.start_capital }}€</td>
                         <td>{{ company.start_date }}</td>
-                        {% if current_user.get_id() == company.id %}
+                        {% if current_user.get_id() == company.creator_id %}
                         <td>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCompanyModal">
                                 Remove</button>

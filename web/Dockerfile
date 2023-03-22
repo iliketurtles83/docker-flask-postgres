@@ -1,16 +1,16 @@
 # syntax=docker/dockerfile:1
 FROM python:3.10-slim-buster
 
-WORKDIR /web
+WORKDIR /usr/src/app
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # install system dependencies
-COPY requirements.txt /web
+COPY requirements.txt /usr/src/app/requirements.txt
 RUN pip install -r requirements.txt
 
-COPY . /web/
+COPY . /usr/src/app
 
-CMD ["/web/entrypoint.sh"]
+CMD ["/usr/src/app/entrypoint.sh"]

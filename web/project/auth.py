@@ -1,7 +1,7 @@
 from flask import Blueprint, redirect, url_for
 from flask_login import login_required, login_user, logout_user
-from web.models import db, User
-from web.forms import LoginForm
+from project.models import db, User
+from project.forms import LoginForm
 import bcrypt
 import binascii
 

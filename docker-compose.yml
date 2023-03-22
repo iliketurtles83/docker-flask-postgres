@@ -10,12 +10,14 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data/
 
   web:
     container_name: flask
     build: ./web
-    stop_signal: SIGINT
+    command: python manage.py run -h 0.0.0.0
+    volumes:
+      - ./web:/usr/src/app
     restart: always
     env_file:
       - .env_flask

@@ -2,8 +2,8 @@
 from flask import Blueprint, redirect, request, render_template, url_for
 from flask_login import login_required, current_user
 
-from web.forms import CompanyForm, LegalShareholderForm, NaturalShareholderForm
-from web.models import db, Company, NaturalShareHolder, LegalShareHolder
+from project.forms import CompanyForm, LegalShareholderForm, NaturalShareholderForm
+from project.models import db, Company, NaturalShareHolder, LegalShareHolder
 
 main_bp = Blueprint('main', __name__)
 
