@@ -25,6 +25,7 @@ class NaturalShareholderForm(FlaskForm):
 class CompanyForm(FlaskForm):
     name = StringField('Name:', validators=[DataRequired()], description='Company Name')
     reg_code = IntegerField('Registration Code:', validators=[DataRequired()])
+    creator_id = IntegerField('Creator ID:', validators=[DataRequired()])
     start_date = DateField('Start Date:', validators=[DataRequired()])
     start_capital = DecimalField('Starting Capital:', validators=[DataRequired(), NumberRange(min=1)])
     legal_shareholders = FieldList(FormField(LegalShareholderForm), min_entries=1, max_entries=5)

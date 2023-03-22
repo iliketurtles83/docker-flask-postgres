@@ -1,5 +1,6 @@
 
 from flask import Blueprint, redirect, request, render_template, url_for
+from flask_login import login_required, current_user
 
 from web.forms import CompanyForm, LegalShareholderForm, NaturalShareholderForm
 from web.models import db, Company, NaturalShareHolder, LegalShareHolder
@@ -28,11 +29,13 @@ def get_companies():
     return render_template('companies.html', companies=companies), 200
 
 @main_bp.route('/new_company', methods=['GET', 'POST'])
+@login_required
 def create_company():
     form = CompanyForm()
-    if form.validate_on_submit():
+    if form.validate_on_submit() and current_user.is_authenticated:
         company = Company(
             name=form.name.data,
+            creator_id=form.creator_id.data,
             reg_code=form.reg_code.data,
             start_date=form.start_date.data,
             start_capital=form.start_capital.data
@@ -72,21 +75,26 @@ def create_company():
     return render_template("new_company.html", form=form), 200
 
 @main_bp.route('/company/<int:id>/update', methods=['POST'])
+@login_required
 def update_company(id):
     company = Company.query.get_or_404(id)
-    company.name = request.form['name']
-    db.session.commit()
-    return redirect(url_for('main.get_company', id=company.id))
+    if current_user.get_id() == company.creator_id:
+        company.name = request.form['name']
+        db.session.commit()
+        return redirect(url_for('main.get_company', id=company.id))
 
 @main_bp.route('/company/<int:id>/delete')
+@login_required
 def delete_company(id):
     company = Company.query.get_or_404(id)
 
-    db.session.delete(company)
-    db.session.commit()
-    return redirect(url_for('main.get_companies'))
+    if current_user.get_id() == company.creator_id:
+        db.session.delete(company)
+        db.session.commit()
+        return redirect(url_for('main.get_companies'))
 
 @main_bp.route('/company/<int:id>/add_natural', methods=['GET', 'POST'])
+@login_required
 def add_natural_shareholder(id):
     form = NaturalShareholderForm()
     if form.validate_on_submit():
@@ -103,6 +111,7 @@ def add_natural_shareholder(id):
         return redirect(url_for('main.get_company', id=id))
     
 @main_bp.route('/company/<int:id>/add_legal', methods=['GET', 'POST'])
+@login_required
 def add_legal_shareholder(id):
     form = LegalShareholderForm()
     if form.validate_on_submit():
@@ -118,6 +127,7 @@ def add_legal_shareholder(id):
         return redirect(url_for('main.get_company', id=id))
 
 @main_bp.route('/delete_natural/<int:id>')
+@login_required
 def delete_natural_shareholder(id):
     shareholder = NaturalShareHolder.query.get_or_404(id)
     db.session.delete(shareholder)
@@ -125,6 +135,7 @@ def delete_natural_shareholder(id):
     return redirect(url_for('main.get_company', id=shareholder.company_id))
 
 @main_bp.route('/delete_legal/<int:id>')
+@login_required
 def delete_legal_shareholder(id):
     shareholder = LegalShareHolder.query.get_or_404(id)
     db.session.delete(shareholder)

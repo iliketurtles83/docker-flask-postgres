@@ -16,7 +16,9 @@
                         <th>Registration Code</th>
                         <th>Start Capital</th>
                         <th>Start Date</th>
+                        {% if current_user.is_authenticated %}
                         <th></th>
+                        {% endif %}
                     </tr>
                 </thead>
                 {% for company in companies %}
@@ -25,6 +27,7 @@
                         <td>{{ company.reg_code }}</td>
                         <td>{{ company.start_capital }}€</td>
                         <td>{{ company.start_date }}</td>
+                        {% if current_user.get_id() == company.id %}
                         <td>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCompanyModal">
                                 Remove</button>
@@ -46,6 +49,7 @@
                                 </div>
                             </div>
                         </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </table>

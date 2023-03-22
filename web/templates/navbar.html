@@ -12,9 +12,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('main.get_companies') }}">Companies</a>
                 </li>
+                {% if current_user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('main.create_company') }}">Add New</a>
                 </li>
+                {% endif %}
                 {% if current_user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>

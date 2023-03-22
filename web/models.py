@@ -23,15 +23,13 @@ class User(UserMixin, db.Model):
     def is_anonymous(self):
         return False
     
-    def get_company_id(self):
-        return self.company_id
-    
     def verify_password(self, password):
         return bcrypt.checkpw(password, self.password)
 
 class Company(db.Model):
     __tablename__ = 'companies'
     id = db.Column(db.Integer, primary_key=True)
+    creator_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     reg_code = db.Column(db.Integer, nullable=False, unique=True)
     name = db.Column(db.String(100), nullable=False)
     start_date = db.Column(db.Date, default=datetime.date.today)
