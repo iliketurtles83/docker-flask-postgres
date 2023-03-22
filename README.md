@@ -6,6 +6,7 @@ For practice purposes. But once finished, it can be easily copied and adapted to
 - Web: Flask
 - ORM: SQLAlchemy
 - Database: PostgreSQL
+- User Authentication: Flask-Login and bcrypt
 - Containerization: Docker
 - WSGI Server: Gunicorn
 - Reverse Proxy Server: NGINX
@@ -16,7 +17,7 @@ For practice purposes. But once finished, it can be easily copied and adapted to
 - [x] models for SQLAlchemy
 - [x] Postgres container
 - [x] Postgres integration into Flask
-- [ ] use __init__.py for Flask
+
 - [x] Flask separate config.py
 - [x] Routes via blueprints
 - [x] Add new entry
@@ -24,15 +25,16 @@ For practice purposes. But once finished, it can be easily copied and adapted to
 - [x] Remove entry
 - [x] Nginx server container
 - [x] WSGI-Gunicorn
+- [ ] use __init__.py for Flask
 - [ ] Reorganize Flask app folder structure
-- [ ] User auth and respective routes
+- [x] User auth and respective routes
 - [ ] Redis?
 - [ ] Celery?
 - [ ] RabbitMQ?
 
 ### Errors
 - ```docker compose exec web python manage.py create_db``` does not work, i'm still learning how to do this properly
-- for now, go to the flask container shell with ```docker exec -it web sh```, run flask shell, then import db and db.create_all()
+- for now, go to the flask container shell with ```docker exec -it web /bin/sh```, run ```flask shell```, then ```from web.models import db``` and ```db.create_all()```
 
 ### Instructions
 1. Rename .env_flask.sample and .env_pg.sample to .env_flask and .env_pg
