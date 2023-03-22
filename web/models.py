@@ -8,7 +8,7 @@ db = SQLAlchemy()
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    password = db.Column(db.String(128), nullable=False)
+    password = db.Column(db.LargeBinary, nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
 
     def get_id(self):
@@ -25,6 +25,9 @@ class User(UserMixin, db.Model):
     
     def get_company_id(self):
         return self.company_id
+    
+    def verify_password(self, password):
+        return bcrypt.checkpw(password, self.password)
 
 class Company(db.Model):
     __tablename__ = 'companies'

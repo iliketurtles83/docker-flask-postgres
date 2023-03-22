@@ -1,11 +1,11 @@
 from flask_wtf import FlaskForm
 from datetime import date
-from wtforms import StringField, DateField, DecimalField, FieldList, FormField, BooleanField, HiddenField, SubmitField, IntegerField
+from wtforms import StringField, DateField, DecimalField, FieldList, FormField, BooleanField, HiddenField, SubmitField, IntegerField, PasswordField
 from wtforms.validators import DataRequired, ValidationError, NumberRange
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
-    password = StringField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
 
 class LegalShareholderForm(FlaskForm):
     leg_name = StringField('Name', validators=[DataRequired()])
