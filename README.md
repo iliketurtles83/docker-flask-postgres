@@ -27,21 +27,17 @@ For practice purposes. But once finished, it can be easily copied and adapted to
 - [x] use __init__.py for Flask
 - [x] Reorganize Flask app folder structure
 - [x] User auth and respective routes
-- [ ] Separate development and production environment
+- [x] Separate development and production environment
 - [ ] Redis?
 - [ ] Celery?
 - [ ] RabbitMQ?
 
-### Errors
-- ```docker compose exec web python manage.py create_db``` does not work, i'm still learning how to do this properly
-- for now, go to the flask container shell with ```docker exec -it web /bin/sh```, run ```flask shell```, then ```from web.models import db``` and ```db.create_all()```
-
 ### Instructions
 1. Rename .env_flask.sample and .env_pg.sample to .env_flask and .env_pg
 2. Replace your Postgres username, password and db_name in both files.
-3. Run 'chmod +x entrypoint.sh' (not sure if Github keeps permissions)
-4. Run 'docker compose build'
-5. Run 'docker compose up'
-6. ```docker compose exec web python manage.py create_db``` to create tables
+3. Run ```chmod +x entrypoint.sh``` (not sure if Github keeps permissions)
+4. Run ```docker-compose build```
+5. Run ```docker-compose up```
+6. In new terminal run ```docker-compose exec web python manage.py create_db``` to create tables
 7. ???
 8. Profit
