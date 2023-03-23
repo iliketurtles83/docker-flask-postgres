@@ -6,7 +6,6 @@ from project.config import Config
 from project.routes import main_bp
 from project.auth import auth
 from flask_login import LoginManager
-# from flask_migrate import Migrate
 
 csrf = CSRFProtect()
 
@@ -23,7 +22,6 @@ def create_app(config_name=Config):
     
     csrf.init_app(app)
     db.init_app(app)
-    # migrate = Migrate(app, db)
     Bootstrap5(app)
     app.register_blueprint(main_bp)
     app.register_blueprint(auth)

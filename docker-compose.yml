@@ -2,7 +2,7 @@ version: '3'
 
 services:
   db:
-    container_name: postgres
+    container_name: db
     image: postgres:latest
     restart: always
     env_file:
@@ -13,7 +13,7 @@ services:
       - db_data:/var/lib/postgresql/data/
 
   web:
-    container_name: flask
+    container_name: web
     build: ./web
     command: python manage.py run -h 0.0.0.0
     volumes:
@@ -22,22 +22,11 @@ services:
     env_file:
       - .env_flask
     ports:
-      - "8000:8000"
-    expose:
-      - 8000
+      - "5000:5000"
     # networks:
     #   - backend
     depends_on:
       - db
-
-  nginx:
-    container_name: nginx
-    build: ./nginx
-    restart: always
-    ports:
-      - "80:80"
-    depends_on:
-      - web
 
 volumes:
   db_data:
