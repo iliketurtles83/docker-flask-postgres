@@ -17,7 +17,6 @@ For practice purposes. But once finished, it can be easily copied and adapted to
 - [x] models for SQLAlchemy
 - [x] Postgres container
 - [x] Postgres integration into Flask
-
 - [x] Flask separate config.py
 - [x] Routes via blueprints
 - [x] Add new entry
@@ -25,9 +24,10 @@ For practice purposes. But once finished, it can be easily copied and adapted to
 - [x] Remove entry
 - [x] Nginx server container
 - [x] WSGI-Gunicorn
-- [ ] use __init__.py for Flask
-- [ ] Reorganize Flask app folder structure
+- [x] use __init__.py for Flask
+- [x] Reorganize Flask app folder structure
 - [x] User auth and respective routes
+- [ ] Separate development and production environment
 - [ ] Redis?
 - [ ] Celery?
 - [ ] RabbitMQ?
